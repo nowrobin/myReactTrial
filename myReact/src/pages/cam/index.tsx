@@ -1,11 +1,36 @@
 import Webcam from "react-webcam";
-import React, { MutableRefObject, useCallback, useRef, useState } from "react";
+import React, {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { useQuery } from "react-query";
+import { QueryKeys, restFetcher } from "@/queryclient";
 
 export default function Campage() {
-  const webcamRef = useRef<any>(null);
+  const webcamRef = useRef<any>();
   const mediaRecorderRef = useRef<any>();
   const [capturing, setCapturing] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [x, setX] = useState({
+    id: 0,
+    number: 0,
+    title: "",
+    question: "",
+    category: "",
+  });
+
+  // const question = useQuery(
+  //   "questions",
+  //   // await restFetcher({
+  //   //   method: "GET",
+  //   //   path: "/intervew/questions",
+  //   //   //queryKey: [QueryKeys.INTERVIEW],
+  //   () => fetch("/intervew/questions").then((res) => res.json())
+  // );
 
   const handleDataAvailable = useCallback(
     ({ data }: any) => {
@@ -51,8 +76,26 @@ export default function Campage() {
       setRecordedChunks([]);
     }
   }, [recordedChunks]);
+
+  function generator(e: any) {
+    e.preventDefault();
+    fetch("/intervew/questions")
+      .then((response) => response.json())
+      .then((data) => {
+        setQuestions(data);
+      });
+    questions.map((x) => {
+      console.log(x);
+    });
+  }
+  function nextClick() {
+    questions.map((x) => {
+      console.log(x);
+      x;
+    });
+  }
   return (
-    <>
+    <div>
       <Webcam
         mirrored={true}
         imageSmoothing={true}
@@ -67,6 +110,9 @@ export default function Campage() {
       {recordedChunks.length > 0 && (
         <button onClick={handleDownload}>Download</button>
       )}
-    </>
+      <button onClick={nextClick}>Next</button>
+      <div> </div>
+      <button onClick={generator}>Generate</button>
+    </div>
   );
 }

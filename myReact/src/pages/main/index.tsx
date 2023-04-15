@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { CustomButton } from "../../components/atom/buttons";
+import Webcam from "react-webcam";
 
 const CONSTRAINTS = { video: true };
 
