@@ -14,7 +14,7 @@ const Campage = lazy(() => import("@/pages/cam"));
 //     </Suspense>
 //   );
 // };
-
+//ㅇㄴㅁㅇㅁㄴㅇㅁ
 export const routes = [
   {
     path: "/",
