@@ -14,24 +14,26 @@ export default function Campage() {
   const mediaRecorderRef = useRef<any>();
   const [capturing, setCapturing] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState([]);
-  const [questions, setQuestions] = useState([]);
-  const [x, setX] = useState({
-    id: 0,
-    number: 0,
-    title: "",
-    question: "",
-    category: "",
-  });
-
-  // const question = useQuery(
-  //   "questions",
-  //   // await restFetcher({
-  //   //   method: "GET",
-  //   //   path: "/intervew/questions",
-  //   //   //queryKey: [QueryKeys.INTERVIEW],
-  //   () => fetch("/intervew/questions").then((res) => res.json())
-  // );
-
+  const [questions, setQuestions] = useState<any>([]);
+  const [generated, setGenerate] = useState(false);
+  const [x, setX] = useState([
+    {
+      id: 0,
+      number: 0,
+      title: "",
+      question: "",
+      category: "",
+    },
+  ]);
+  useEffect(() => {
+    fetch("/intervew/questions")
+      .then((response) => response.json())
+      .then((data) => {
+        setQuestions(data);
+        setGenerate(true);
+        setX(data);
+      });
+  }, []);
   const handleDataAvailable = useCallback(
     ({ data }: any) => {
       if (data.size > 0) {
@@ -77,42 +79,43 @@ export default function Campage() {
     }
   }, [recordedChunks]);
 
-  function generator(e: any) {
-    e.preventDefault();
-    fetch("/intervew/questions")
-      .then((response) => response.json())
-      .then((data) => {
-        setQuestions(data);
-      });
-    questions.map((x) => {
-      console.log(x);
-    });
-  }
   function nextClick() {
-    questions.map((x) => {
+    questions.map((x: any) => {
       console.log(x);
       x;
     });
   }
+  function CreateModal({ x }: any) {
+    return <h1>{x}</h1>;
+  }
+  console.log(questions);
   return (
     <div>
-      <Webcam
-        mirrored={true}
-        imageSmoothing={true}
-        audio={true}
-        ref={webcamRef}
-      />
-      {capturing ? (
-        <button onClick={handleStopCaptureClick}>Stop Capture</button>
-      ) : (
-        <button onClick={handleStartCaptureClick}>Start Capture</button>
-      )}
-      {recordedChunks.length > 0 && (
-        <button onClick={handleDownload}>Download</button>
-      )}
-      <button onClick={nextClick}>Next</button>
-      <div> </div>
-      <button onClick={generator}>Generate</button>
+      <div className="interview">
+        {questions.map((x: any) => {
+          return (
+            <>
+              <CreateModal x={x.question} />
+            </>
+          );
+        })}
+      </div>
+      <div className="camContainer">
+        <Webcam
+          mirrored={true}
+          imageSmoothing={true}
+          audio={true}
+          ref={webcamRef}
+        />
+        {capturing ? (
+          <button onClick={handleStopCaptureClick}>Stop Capture</button>
+        ) : (
+          <button onClick={handleStartCaptureClick}>Start Capture</button>
+        )}
+        {recordedChunks.length > 0 && (
+          <button onClick={handleDownload}>Download</button>
+        )}
+      </div>
     </div>
   );
 }
