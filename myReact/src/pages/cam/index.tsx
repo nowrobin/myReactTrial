@@ -34,6 +34,7 @@ export default function Campage() {
         setX(data);
       });
   }, []);
+
   const handleDataAvailable = useCallback(
     ({ data }: any) => {
       if (data.size > 0) {

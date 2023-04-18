@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 
 const MainPage = lazy(() => import("@/pages/main"));
 const Campage = lazy(() => import("@/pages/cam"));
-
+const Calendar = lazy(() => import("@/pages/calendarpage"));
 // export const routes = () => {
 //   return (
 //     <Suspense fallback={<div>....laoding</div>}>
@@ -22,6 +22,7 @@ export const routes = [
     children: [
       { path: "/main", element: <MainPage /> },
       { path: "/cam", element: <Campage /> },
+      { path: "/calandar", element: <Calendar /> },
     ],
   },
 ];
