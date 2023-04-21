@@ -8,30 +8,28 @@ import React, {
 } from "react";
 import { useQuery } from "react-query";
 import { QueryKeys, restFetcher } from "@/queryclient";
+import { Question } from "@/types/question";
 
 export default function Campage() {
   const webcamRef = useRef<any>();
   const mediaRecorderRef = useRef<any>();
   const [capturing, setCapturing] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState([]);
-  const [questions, setQuestions] = useState<any>([]);
-  const [generated, setGenerate] = useState(false);
-  const [x, setX] = useState([
-    {
-      id: 0,
-      number: 0,
-      title: "",
-      question: "",
-      category: "",
-    },
-  ]);
+  const [questionsList, setQuestionsList] = useState<any>([]);
+  const [qNum, setqNum] = useState<number>(0);
+  const [end, setEnd] = useState<Boolean>(false);
+  const [quiz, setQuiz] = useState<Question>({
+    id: 0,
+    number: 0,
+    title: "",
+    question: "",
+    category: "",
+  });
   useEffect(() => {
     fetch("/intervew/questions")
       .then((response) => response.json())
       .then((data) => {
-        setQuestions(data);
-        setGenerate(true);
-        setX(data);
+        setQuestionsList(data);
       });
   }, []);
 
@@ -81,25 +79,30 @@ export default function Campage() {
   }, [recordedChunks]);
 
   function nextClick() {
-    questions.map((x: any) => {
-      console.log(x);
-      x;
-    });
+    if (qNum >= questionsList.length) {
+      setEnd(true);
+    } else {
+      setQuiz(questionsList[qNum]);
+      setqNum((prev) => prev + 1);
+      setEnd(false);
+    }
   }
   function CreateModal({ x }: any) {
-    return <h1>{x}</h1>;
+    return end ? <h1>end </h1> : <h1>{x}</h1>;
   }
-  console.log(questions);
+  function prevClick() {
+    if (qNum <= 0) {
+      setEnd(true);
+    } else {
+      setEnd(false);
+      setQuiz(questionsList[qNum]);
+      setqNum((prev) => prev - 1);
+    }
+  }
   return (
     <div>
       <div className="interview">
-        {questions.map((x: any) => {
-          return (
-            <>
-              <CreateModal x={x.question} />
-            </>
-          );
-        })}
+        <CreateModal x={quiz.question} />
       </div>
       <div className="camContainer">
         <Webcam
@@ -117,6 +120,12 @@ export default function Campage() {
           <button onClick={handleDownload}>Download</button>
         )}
       </div>
+      <button onClick={prevClick} disabled={end == true}>
+        prev
+      </button>
+      <button onClick={nextClick} disabled={end == true}>
+        next
+      </button>
     </div>
   );
 }
