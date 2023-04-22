@@ -9,6 +9,7 @@ import React, {
 import { useQuery } from "react-query";
 import { QueryKeys, restFetcher } from "@/queryclient";
 import { Question } from "@/types/question";
+import CommmitChart from "@/components/atom/commitChart";
 
 export default function Campage() {
   const webcamRef = useRef<any>();
@@ -126,6 +127,7 @@ export default function Campage() {
       <button onClick={nextClick} disabled={end == true}>
         next
       </button>
+      <CommmitChart />
     </div>
   );
 }
