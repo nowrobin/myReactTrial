@@ -38,7 +38,11 @@ const questions: Question[] = [
   },
 ];
 export const handlers = [
-  rest.get("/intervew/questions", (req, res, ctx) => {
+  rest.get("/interview/questions", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(questions));
   }),
+  rest.post("/interview/questions",(req, res, ctx) => {
+    
+    return res(ctx.status(201), ctx.json(questions))
+  })
 ];
