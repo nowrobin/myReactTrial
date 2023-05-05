@@ -23,7 +23,7 @@ export const routes = [
     children: [
       { path: "/main", element: <MainPage /> },
       { path: "/cam", element: <Campage /> },
-      { path: "/calandar", element: <Calendar /> },
+      { path: "/calendar", element: <Calendar /> },
       { path: "/InterviewSetting", element: <Isetting /> },
     ],
   },
