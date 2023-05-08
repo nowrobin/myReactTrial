@@ -21,7 +21,7 @@ export const routes = [
     path: "/",
     //elements:
     children: [
-      { path: "/main", element: <MainPage /> },
+      { path: "/", element: <MainPage /> },
       { path: "/cam", element: <Campage /> },
       { path: "/calendar", element: <Calendar /> },
       { path: "/InterviewSetting", element: <Isetting /> },

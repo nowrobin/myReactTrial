@@ -1,25 +1,30 @@
-import { useRef } from "react";
-import { CustomButton } from "../../components/atom/buttons";
-import Webcam from "react-webcam";
+import React from "react";
+import { useDrag } from "react-dnd";
+import styles from "./styles.module.scss";
 
 const CONSTRAINTS = { video: true };
 
 export default function MainPage() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const startVideo = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia(CONSTRAINTS);
-    if (videoRef && videoRef.current && !videoRef.current.srcObject) {
-      videoRef.current.srcObject = stream;
-    }
-  };
-
+  // export default function Card({ isDragging, text }) {
+  //   const [{ opacity }, dragRef] = useDrag(
+  //     () => ({
+  //       type: ItemTypes.CARD,
+  //       item: { text },
+  //       collect: (monitor) => ({
+  //         opacity: monitor.isDragging() ? 0.5 : 1
+  //       })
+  //     }),
+  //     []
+  //   )
+  //   return (
+  //     <div ref={dragRef} style={{ opacity }}>
+  //       {text}
+  //     </div>
+  //   )
+  // }
   return (
-    <div className={"cam"}>
-      hello
-      <video className={"cam"} autoPlay ref={videoRef} />
-      <CustomButton text="hello" />
-      <button onClick={startVideo}>Start</button>
+    <div className={`${styles.cardContainer} grid-cols-4`}>
+      <div className="flex bg-white w-32 h-32 text-blue-600">hi</div>
     </div>
   );
 }
