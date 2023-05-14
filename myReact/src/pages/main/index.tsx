@@ -25,6 +25,7 @@ export default function MainPage() {
   return (
     <div className={`${styles.cardContainer} grid-cols-4`}>
       <div className="flex bg-white w-32 h-32 text-blue-600">hi</div>
+      <button className="bg-green">install</button>
     </div>
   );
 }
