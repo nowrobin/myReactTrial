@@ -21,11 +21,16 @@ export default function MainPage() {
   //       {text}
   //     </div>
   //   )
-  // }
+  function onClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    let event = e;
+  }
   return (
     <div className={`${styles.cardContainer} grid-cols-4`}>
       <div className="flex bg-white w-32 h-32 text-blue-600">hi</div>
-      <button className="bg-green">install</button>
+      <button className="bg-green" onClick={onClick}>
+        install
+      </button>
     </div>
   );
 }
