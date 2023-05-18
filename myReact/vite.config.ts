@@ -16,6 +16,7 @@ export default defineConfig({
         description: "Website description(Could be same with index.html file)",
         theme_color: "#ffffff",
         start_url: "/",
+        ///
         icons: [
           {
             src: "pwa-192x192.png",
