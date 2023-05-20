@@ -12,7 +12,7 @@ export default function Input({ placeHolder: String, abc }: props) {
     //onChange();
     abc(x);
   }
-
+  // create inpout ß
   return (
     <>
       <input type="text" placeholder="${placeHolder}" onChange={onChange} />
